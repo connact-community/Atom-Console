@@ -1,48 +1,53 @@
-﻿namespace AtomConsole;
+﻿using AtomConsole.src.Reactor;
+namespace AtomConsole;
 
 class Program
 {
   public static void Main()
   {
-    while (true)
-    {
-      Console.Clear();
-      Console.CursorVisible = true;
-      Console.ForegroundColor = ConsoleColor.Blue;
-      Console.WriteLine("Добро пожаловать в симулятор АЭС - ATOM.");
-      Console.ResetColor();
+    Reactor reactor = new();
+    Indication indication = new(reactor);
+    indication.IndicationReactor();
 
-      Console.ForegroundColor = ConsoleColor.Yellow;
-      Console.WriteLine("\nМЕНЮ");
-      Console.WriteLine(@"
-1 - Блочный щит управления
-2 - Логи
-3 - Выход");
-      Console.ResetColor();
+    /* while (true)
+     {
+     Console.Clear();
+       Console.CursorVisible = true;
+       Console.ForegroundColor = ConsoleColor.Blue;
+       Console.WriteLine("Добро пожаловать в симулятор АЭС - ATOM.");
+       Console.ResetColor();
 
-      Console.Write("\n > ");
-      string userInput = Console.ReadLine()!;
-      switch (userInput)
-      {
-        case "1":
-          MainControlPanel ControlPanel = new MainControlPanel();
-          ControlPanel.Reactor();
-          break;
-        case "2":
-          break;
-        case "3":
-          Console.Clear();
-          return;
-        default:
-          Console.Clear();
-          Console.CursorVisible = false;
-          Console.ForegroundColor = ConsoleColor.Red;
-          Console.WriteLine("Выберите пункт меню!");
-          Console.ResetColor();
-          Thread.Sleep(1000);
-          Console.Clear();
-          break;
-      }
-    }
+       Console.ForegroundColor = ConsoleColor.Yellow;
+       Console.WriteLine(@"
+ Меню
+
+ 1 - Блочный щит управления
+ 2 - Логи
+ 3 - Выход");
+
+       Console.ResetColor();
+       Console.Write("\n > ");
+       string userInput = Console.ReadLine()!;
+       switch (userInput)
+       {
+         case "1":
+           MainControlPanel ControlPanel = new();
+           ControlPanel.Reactor();
+           break;
+         case "2":
+           break;
+         case "3":
+           Console.Clear();
+           return;
+         default:
+           Console.Clear();
+           Console.CursorVisible = false;
+           Console.ForegroundColor = ConsoleColor.Red;
+           Console.WriteLine("Выберите пункт меню!");
+           Console.ResetColor();
+           Thread.Sleep(1000);
+           Console.Clear();
+           break;
+       }*/
   }
 }

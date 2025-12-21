@@ -6,10 +6,6 @@ class MainControlPanel
   {
     while (true)
     {
-      Console.CursorVisible = false;
-      Console.Clear();
-      Console.WriteLine("Нажми!");
-      Console.ReadKey();
       break;
     }
   }
