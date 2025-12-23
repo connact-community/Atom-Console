@@ -1,13 +1,13 @@
-﻿using AtomConsole.src.Reactor;
+﻿using AtomConsole.src.Reactor; // Move to MainControlPanel.cs 
 namespace AtomConsole;
 
 class Program
 {
   public static void Main()
   {
-    Reactor reactor = new();
-    Indication indication = new(reactor);
-    indication.IndicationReactor();
+    Reactor reactor = new(); // Move to MainControlPanel.cs 
+    Indication indication = new(reactor); // Move to MainControlPanel.cs 
+    indication.IndicationReactor(); // Move to MainControlPanel.cs 
 
     /* while (true)
      {
