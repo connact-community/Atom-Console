@@ -2,13 +2,13 @@ namespace AtomConsole.src.Reactor;
 
 class Particle
 {
-  public string Neutron { get; set; }
+  public bool Neutron { get; set; }
   public short NeutronsValue { get; set; } // (Value)
   public short ParticleSpeed { get; set; } // (м/с)
   public short ParticalValue { get; set; } // (Value)
   public Particle()
   {
-    Neutron = "Нейтрон";
+    Neutron = true; // (True - Fast \ False - SLow)
     NeutronsValue = 0;
     ParticleSpeed = 0;
     ParticalValue = 0;

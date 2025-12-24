@@ -1,4 +1,4 @@
-namespace AtomConsole.src.Reactor;
+namespace AtomConsole;
 
 class Reactor
 {
@@ -40,8 +40,8 @@ class Reactor
     WearFuelAssembly = 0;
     ControlRods = 0.0f;
     NeutronsSource = 0;
-    TechnologicalChannel = 1693;
-    ProtectionControlSystem = 119;
-    ProtectionAutomatic = 24;
+    TechnologicalChannel = 0;
+    ProtectionControlSystem = 12;
+    ProtectionAutomatic = 16;
   }
 }
