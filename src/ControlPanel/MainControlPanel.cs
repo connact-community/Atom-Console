@@ -2,6 +2,7 @@ namespace AtomConsole;
 
 class MainControlPanel
 {
+  ControlReactor controlReactor = new();
   public Reactor Reactor { get; set; }
   public MainControlPanel()
   {
@@ -9,6 +10,8 @@ class MainControlPanel
   }
   public void ControlPanel()
   {
+    controlReactor.Reactor = this.Reactor;
+
     while (true)
     {
       Console.Clear();
@@ -22,8 +25,9 @@ class MainControlPanel
 3 - ГЦН
 4-  БС
 5 - Дизель генераторы
+6 - Индикация
  ________________________________________
-6 - Назад");
+7 - Назад");
       Console.ResetColor();
       Console.Write("\n > ");
       string UserInput = Console.ReadLine()!;
@@ -31,30 +35,32 @@ class MainControlPanel
       switch (UserInput)
       {
         case "1":
-          TurboGenerators();
+          ControlTurboGenerators();
           break;
         case "2":
-          Reactor1();
+          ControlReactor();
           break;
         case "3":
-          MainPumps();
+          ControlMainPumps();
           break;
         case "4":
-          DrumSeparators();
+          ControlDrumSeparators();
           break;
         case "5":
-          DieselGenerators();
+          ControlDieselGenerators();
           break;
         case "6":
+          break;
+        case "7":
           return;
       }
     }
   }
-  public void TurboGenerators()
+  public void ControlTurboGenerators()
   {
 
   }
-  public void Reactor1() // ПРИДУМАТЬ ЧТО НИБУДЬ ????????????????????????????????????????????????????????
+  public void ControlReactor()
   {
     while (true)
     {
@@ -77,10 +83,9 @@ class MainControlPanel
 
       Console.ForegroundColor = ConsoleColor.Blue;
       Console.WriteLine(@$"
-ТВС Загружено: {Reactor.TechnologicalChannel}");
+ТВС Загружено: {Reactor.TechnologicalChannel}
+Нейтронные источники загружено: {Reactor.NeutronsSource}");
       Console.ResetColor();
-      Console.ResetColor();
-
       Console.Write("\n > ");
       string UserInput = Console.ReadLine()!;
 
@@ -93,54 +98,16 @@ class MainControlPanel
         case "3":
           break;
         case "4":
-          if (Reactor.TechnologicalChannel < 6 && Reactor.ControlRods == 0.0f && Reactor.WearTechnologicalChannel <= 60 && Reactor.CooldownSystem == false)
-          {
-            Reactor.TechnologicalChannel++;
-            DoneMessage("Загрузка");
-          }
-          else if (Reactor.ControlRods > 0.0f)
-          {
-            ErrorMessage("Стержни СУЗ подняты, загрузка невозможна!");
-          }
-          else if (Reactor.WearTechnologicalChannel > 60)
-          {
-            ErrorMessage("Износ технологических каналов, загрузка невозможна!");
-          }
-          else if (Reactor.CooldownSystem == true)
-          {
-            ErrorMessage("Система расхолаживания включена, загрузка невозможна!");
-          }
-          else
-          {
-            ErrorMessage("Каналы не пусты, загрузка невозможна!");
-          }
+          controlReactor.LoadFuel();
           break;
         case "5":
-          if (Reactor.TechnologicalChannel > 0 && Reactor.ControlRods == 0.0f && Reactor.WearTechnologicalChannel < 60 && Reactor.CooldownSystem == false)
-          {
-            Reactor.TechnologicalChannel--;
-            DoneMessage("Разгрузка");
-          }
-          else if (Reactor.ControlRods > 0.0f)
-          {
-            ErrorMessage("Стержни СУЗ подняты, разгрузка невозможна!");
-          }
-          else if (Reactor.WearTechnologicalChannel > 60)
-          {
-            ErrorMessage("Износ технологических каналов, разгрузка невозможна!");
-          }
-          else if (Reactor.CooldownSystem == true)
-          {
-            ErrorMessage("Система расхолаживания включена, разгрузка невозможна!");
-          }
-          else
-          {
-            ErrorMessage("Каналы пустые, разгрузка невозможна");
-          }
+          controlReactor.UnloadFuel();
           break;
         case "6":
+          controlReactor.LoadNeutronSource();
           break;
         case "7":
+          controlReactor.UnloadNeutronSource();
           break;
         case "8":
           // Выход
@@ -148,36 +115,16 @@ class MainControlPanel
       }
     }
   }
-  public void MainPumps()
+  public void ControlMainPumps()
   {
 
   }
-  public void DrumSeparators()
+  public void ControlDrumSeparators()
   {
 
   }
-  public void DieselGenerators()
+  public void ControlDieselGenerators()
   {
 
-  }
-  public void DoneMessage(string DoneMessage)
-  {
-    Console.Clear();
-    Console.CursorVisible = false;
-    Console.ForegroundColor = ConsoleColor.Green;
-    Console.WriteLine(DoneMessage);
-    Console.ResetColor();
-    Thread.Sleep(1000);
-    Console.Clear();
-  }
-  public void ErrorMessage(string ErrorMessage)
-  {
-    Console.Clear();
-    Console.CursorVisible = false;
-    Console.ForegroundColor = ConsoleColor.Red;
-    Console.WriteLine(ErrorMessage);
-    Console.ResetColor();
-    Thread.Sleep(1000);
-    Console.Clear();
   }
 }
