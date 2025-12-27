@@ -1,115 +1,15 @@
 namespace AtomConsole;
 
-class ControlReactor
+class MainParameters
 {
-  public Reactor Reactor { get; set; }
-  public ControlReactor()
+  public void All()
   {
-    Reactor = new Reactor();
-  }
-  public void LoadFuel()
-  {
-    if (Reactor.TechnologicalChannel < 6 && Reactor.ControlRods == 0.0f && Reactor.WearTechnologicalChannel <= 60 && Reactor.CooldownSystem == false)
-    {
-      DoneMessage("Загрузка ТВС...");
-      Reactor.TechnologicalChannel++;
-    }
-    else if (Reactor.ControlRods > 0.0f)
-    {
-      ErrorMessage("Стержни СУЗ подняты, загрузка невозможна!");
-    }
-    else if (Reactor.WearTechnologicalChannel > 60)
-    {
-      ErrorMessage("Износ технологических каналов, загрузка невозможна!");
-    }
-    else if (Reactor.CooldownSystem == true)
-    {
-      ErrorMessage("Система расхолаживания включена, загрузка невозможна!");
-    }
-    else
-    {
-      ErrorMessage("Каналы заполнены, загрузка невозможна!");
-    }
-  }
-  public void UnloadFuel()
-  {
-    if (Reactor.TechnologicalChannel > 0 && Reactor.ControlRods == 0.0f && Reactor.WearTechnologicalChannel <= 60 && Reactor.CooldownSystem == false)
-    {
-      Reactor.TechnologicalChannel--;
-      DoneMessage("Разгрузка ТВС...");
-    }
-    else if (Reactor.ControlRods > 0.0f)
-    {
-      ErrorMessage("Стержни СУЗ подняты, разгрузка невозможна!");
-    }
-    else if (Reactor.WearTechnologicalChannel > 60)
-    {
-      ErrorMessage("Износ технологических каналов, разгрузка невозможна!");
-    }
-    else if (Reactor.CooldownSystem == true)
-    {
-      ErrorMessage("Система расхолаживания включена, разгрузка невозможна!");
-    }
-    else
-    {
-      ErrorMessage("Каналы пустые, разгрузка невозможна!");
-    }
-  }
-  public void LoadNeutronSource()
-  {
-    if (Reactor.NeutronsSource < 2 && Reactor.TechnologicalChannel == 0 && Reactor.ControlRods == 0.0f && Reactor.WearTechnologicalChannel <= 60 && Reactor.CooldownSystem == false)
-    {
-      Reactor.NeutronsSource++;
-      DoneMessage("Загрузка нейтронных источников...");
-    }
-    else if (Reactor.TechnologicalChannel > 0)
-    {
-      ErrorMessage("Технологические каналы заполнены ТВС, загрузка нейтронных источников невозможна!");
-    }
-    else if (Reactor.ControlRods > 0.0f)
-    {
-      ErrorMessage("Стержни СУЗ подняты, разгрузка нейтронных источников невозможна!");
-    }
-    else if (Reactor.WearTechnologicalChannel > 60)
-    {
-      ErrorMessage("Износ технологических каналов, загрузка нейтронных источников невозможна!");
-    }
-    else if (Reactor.CooldownSystem == true)
-    {
-      ErrorMessage("Система расхолаживания включена, загрузка нейтронных источников невозможна!");
-    }
-    else
-    {
-      ErrorMessage("Каналы заполнены, загрузка невозможна!");
-    }
-  }
-  public void UnloadNeutronSource()
-  {
-    if (Reactor.NeutronsSource > 0 && Reactor.TechnologicalChannel == 0 && Reactor.ControlRods == 0.0f && Reactor.WearTechnologicalChannel <= 60 && Reactor.CooldownSystem == false)
-    {
-      Reactor.NeutronsSource--;
-      DoneMessage("Разгрузка нейтронных источников...");
-    }
-    else if (Reactor.TechnologicalChannel > 0)
-    {
-      ErrorMessage("Технологические каналы заполнены ТВС, разгрузка нейтронных источников невозможна!");
-    }
-    else if (Reactor.ControlRods > 0.0f)
-    {
-      ErrorMessage("Стержни СУЗ подняты, разгрузка нейтронных источников невозможна!");
-    }
-    else if (Reactor.WearTechnologicalChannel > 60)
-    {
-      ErrorMessage("Износ технологических каналов, разгрузка нейтронных источников невозможна!");
-    }
-    else if (Reactor.CooldownSystem == true)
-    {
-      ErrorMessage("Система расхолаживания включена, разгрузка нейтронных источников невозможна!");
-    }
-    else
-    {
-      ErrorMessage("Каналы пустые, разгрузка невозможна!");
-    }
+    if (Reactor.ControlRods > 0.0f)
+    { ErrorMessage("Стержни СУЗ подняты, загрузка невозможна!"); return; }
+    if (Reactor.WearTechnologicalChannel > 60)
+    { ErrorMessage("Износ технологических каналов, загрузка невозможна!"); return; }
+    if (Reactor.CooldownSystem == true)
+    { ErrorMessage("Система расхолаживания включена, загрузка невозможна!"); return; }
   }
   public void DoneMessage(string DoneMessage)
   {
@@ -130,5 +30,40 @@ class ControlReactor
     Console.ResetColor();
     Console.ReadKey();
     Console.Clear();
+  }
+}
+class ControlReactor : MainParameters
+{
+  public void LoadFuel()
+  {
+    if (Reactor.TechnologicalChannel == 6)
+    { ErrorMessage("Каналы заполнены, загрузка невозможна!"); return; }
+    DoneMessage("Загрузка ТВС...");
+    Reactor.TechnologicalChannel++;
+  }
+  public void UnloadFuel()
+  {
+    if (Reactor.TechnologicalChannel == 0)
+    { ErrorMessage("Каналы пустые, разгрузка невозможна!"); return; }
+    Reactor.TechnologicalChannel--;
+    DoneMessage("Разгрузка ТВС...");
+  }
+  public void LoadNeutronSource()
+  {
+    if (Reactor.TechnologicalChannel >= 1)
+    { ErrorMessage("ТК заполнены ТВС, загрузка нейтронных источников невозможна!"); return; }
+    if (Reactor.NeutronsSource == 2)
+    { ErrorMessage("Каналы заполнены, загрузка невозможна!"); return; }
+    Reactor.NeutronsSource++;
+    DoneMessage("Загрузка нейтронных источников...");
+  }
+  public void UnloadNeutronSource()
+  {
+    if (Reactor.TechnologicalChannel >= 1)
+    { ErrorMessage("ТК заполнены ТВС, разгрузка нейтронных источников невозможна!"); return; }
+    if (Reactor.NeutronsSource == 0)
+    { ErrorMessage("Каналы пустые, разгрузка невозможна!"); return; }
+    Reactor.NeutronsSource--;
+    DoneMessage("Разгрузка нейтронных источников...");
   }
 }

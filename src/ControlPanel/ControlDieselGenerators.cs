@@ -1,8 +1,16 @@
 namespace AtomConsole.src.ControlPanel;
 
-class ControlDieselGenerators
+static class ControlDieselGenerators
 {
-  public void Start()
+  static ControlDieselGenerators()
+  {
+
+  }
+  public static void Start()
+  {
+
+  }
+  public static void BreakDownSystemDieselGenerators()
   {
 
   }

@@ -1,8 +1,12 @@
 namespace AtomConsole.src.ControlPanel;
 
-class ControlTurboGenerators
+static class ControlTurboGenerators
 {
-  public void Start()
+  public static void Start()
+  {
+
+  }
+  public static void BreakDownSystemTurboGenerators()
   {
 
   }

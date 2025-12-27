@@ -1,8 +1,16 @@
 namespace AtomConsole.src.ControlPanel;
 
-class ControlDrumSeparator
+static class ControlDrumSeparator
 {
-  public void Start()
+  static ControlDrumSeparator()
+  {
+
+  }
+  public static void Start()
+  {
+
+  }
+  public static void BreakDownSystemDrumSeparator()
   {
 
   }

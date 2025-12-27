@@ -1,17 +1,12 @@
+using AtomConsole.src.ControlPanel;
 namespace AtomConsole;
 
 class MainControlPanel
 {
   ControlReactor controlReactor = new();
-  public Reactor Reactor { get; set; }
-  public MainControlPanel()
-  {
-    Reactor = new Reactor();
-  }
+  Indication indication = new();
   public void ControlPanel()
   {
-    controlReactor.Reactor = this.Reactor;
-
     while (true)
     {
       Console.Clear();
@@ -23,11 +18,11 @@ class MainControlPanel
 1 - Турбогенераторы
 2 - Реактор
 3 - ГЦН
-4-  БС
+4 - БС
 5 - Дизель генераторы
 6 - Индикация
  ________________________________________
-7 - Назад");
+0 - Назад");
       Console.ResetColor();
       Console.Write("\n > ");
       string UserInput = Console.ReadLine()!;
@@ -35,32 +30,34 @@ class MainControlPanel
       switch (UserInput)
       {
         case "1":
-          ControlTurboGenerators();
+          TurboGeneratorsMenu();
           break;
         case "2":
-          ControlReactor();
+          ReactorMenu();
           break;
         case "3":
-          ControlMainPumps();
+          MainPumpsMenu();
           break;
         case "4":
-          ControlDrumSeparators();
+          DrumSeparatorsMenu();
           break;
         case "5":
-          ControlDieselGenerators();
+          DieselGeneratorsMenu();
           break;
         case "6":
+          indication.IndicationReactor();
           break;
-        case "7":
+        case "0":
+          //Exit
           return;
       }
     }
   }
-  public void ControlTurboGenerators()
+  public void TurboGeneratorsMenu()
   {
 
   }
-  public void ControlReactor()
+  public void ReactorMenu()
   {
     while (true)
     {
@@ -79,8 +76,8 @@ class MainControlPanel
   6 - Загрузить нейтронные источники в ТК
   7 - Разгрузить нейтронные источники из ТК
   ________________________________________
-  8 - Назад");
-
+  0 - Назад");
+      Console.ResetColor();
       Console.ForegroundColor = ConsoleColor.Blue;
       Console.WriteLine(@$"
 ТВС Загружено: {Reactor.TechnologicalChannel}
@@ -109,21 +106,55 @@ class MainControlPanel
         case "7":
           controlReactor.UnloadNeutronSource();
           break;
-        case "8":
-          // Выход
+        case "0":
+          // Exit
           return;
       }
     }
   }
-  public void ControlMainPumps()
+  public void MainPumpsMenu()
+  {
+    while (true)
+    {
+      Console.Clear();
+      Console.CursorVisible = true;
+      Console.ForegroundColor = ConsoleColor.Yellow;
+      Console.WriteLine(@"
+1 - Запустить ГЦН
+2 - Остановить ГЦН
+0 - Назад
+");
+      Console.ResetColor();
+
+      if (ControlMainPumps.StatusMainPumps == "Работает")
+      { Console.ForegroundColor = ConsoleColor.Green; }
+      else
+      { Console.ForegroundColor = ConsoleColor.Red; }
+
+      Console.WriteLine($"Статус ГЦН: " + ControlMainPumps.StatusMainPumps);
+      Console.ResetColor();
+      Console.Write("\n> ");
+      string UserInput = Console.ReadLine()!;
+
+      switch (UserInput)
+      {
+        case "1":
+          ControlMainPumps.LaucnhMainPumps();
+          break;
+        case "2":
+          ControlMainPumps.StopMainPumps();
+          break;
+        case "0":
+          //Exit
+          return;
+      }
+    }
+  }
+  public void DrumSeparatorsMenu()
   {
 
   }
-  public void ControlDrumSeparators()
-  {
-
-  }
-  public void ControlDieselGenerators()
+  public void DieselGeneratorsMenu()
   {
 
   }
